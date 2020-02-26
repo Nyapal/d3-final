@@ -1,0 +1,83 @@
+<html>
+  <head></head>
+  <body>
+    <h1 style="text-align: center; padding: 5px;"> USA Rent Data </h1>
+    <div style="width:100%; text-align:center">
+      <svg id="svg"></svg>
+    </div>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script>
+      d3.csv('rent.csv')
+      .then(function(data) {
+        const states = data.filter((d) => {
+          return d.Location_Type === 'State' 
+        })
+        // STATES
+        const studio = [...states]
+        const br1 = [...states]
+        const br2 = [...states]
+        const br3 = [...states]
+        const br4 = [...states]
+        
+        // Studio Sort 
+        studio.sort((a,b) => {
+          const pA = parseFloat(a.Price_Studio)
+          const pB = parseFloat(b.Price_Studio)
+          return a.Price_Studio - b.Price_Studio
+        })
+        // 1br Sort 
+        br1.sort((a,b) => {
+          return parseFloat(a.Price_1br) - parseFloat(b.Price_1br)
+        })
+        // 2br Sort 
+        br2.sort((a,b) => {
+          return parseFloat(a.Price_2br) - parseFloat(b.Price_2br)
+        })
+        // 3br Sort 
+        br3.sort((a,b) => {
+          return parseFloat(a.Price_3br) - parseFloat(b.Price_3br)
+        })
+        // 4br Sort 
+        br4.sort((a,b) => {
+          // const pA = parseFloat(a.Price_1br)
+          // const pB = parseFloat(b.Price_1br)
+          return parseFloat(a.Price_4br) - parseFloat(b.Price_4br)
+        })
+
+        // Ten Most Expensive Studios
+        meStudio = studio.slice(studio.length - 10, studio.length).reverse()
+        // Ten Cheapest Studios
+        chStudio = studio.slice(0, 10)
+        
+        // Ten Most Expensive 1br Apts
+        me1br = br1.slice(br1.length - 10, br1.length).reverse()
+        // Ten Cheapest 1br Aptss
+        ch1br = br1.slice(0, 10)
+        
+        // Ten Most Expensive 2br Apts
+        me2br = br2.slice(br2.length - 10, br2.length).reverse()
+        // Ten Cheapest 2br Aptss
+        ch2br = br2.slice(0, 10)
+        
+        // Ten Most Expensive 3br Apts
+        me3br = br3.slice(br3.length - 10, br3.length).reverse()
+        // Ten Cheapest 3br Aptss
+        ch3br = br3.slice(0, 10)
+        
+        // Ten Most Expensive 4br Apts
+        me4br = br4.slice(br4.length - 10, br4.length).reverse()
+        // Ten Cheapest 1br Aptss
+        ch4br = br4.slice(0, 10)
+
+      d3.select('#svg')
+        .attr('viewBox', [0, 0, 500, 150])
+        .style('border', '2px solid coral')
+
+    }).catch(function(err) {
+      console.log(err.message)
+    })
+   
+    </script>
+  </body>
+  
+</html>
